@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.hongguo.helper'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.hongguo.helper"
+        minSdk 26
+        targetSdk 34
+        versionCode 2
+        versionName "1.1.0"
+    }
+
+    signingConfigs {
+        debug {
+            // 发布包沿用 debug 签名: 老用户可以直接覆盖安装,
+            // 不会因为换签名被系统要求卸载(卸载会丢失 ADB 配对密钥)
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        aidl true
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/versions/**', 'META-INF/{AL2.0,LGPL2.1}',
+                         'META-INF/INDEX.LIST', 'META-INF/DEPENDENCIES', 'module-info.class']
+        }
+    }
+}
+
+dependencies {
+    implementation 'dev.rikka.shizuku:api:13.1.5'
+    implementation 'dev.rikka.shizuku:provider:13.1.5'
+    implementation 'androidx.core:core:1.13.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.78.1'
+}
